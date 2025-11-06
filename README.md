@@ -1,1 +1,3 @@
-# Black--jack
+# Blackjack
+
+Python blackjack project for school.

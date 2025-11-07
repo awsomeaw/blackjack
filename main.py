@@ -13,6 +13,7 @@ def result():
 
     ui.show_message(status)
     ui.disable_buttons()
+    ui.show_money(game.money_count(game.check_winner()))
 
 def hit():
     score = game.player_hit()

@@ -13,6 +13,7 @@ def create_window():
     global dealer_label
     global player_label
     global score_label
+    global money_label
     global message_label
     global hit_button
     global stand_button
@@ -22,6 +23,7 @@ def create_window():
     root.title("Blackjack")
     root.geometry("820x650")
     root.configure(bg='green')
+    root.iconbitmap("cards/ace_of_hearts.ico") # Set app icon
 
     # Frames
     gallery_frame1 = tk.Frame(root, bg='green')
@@ -32,6 +34,7 @@ def create_window():
     dealer_label = tk.Label(root, text="", bg='green', fg='white', font=('Arial', 14))
     player_label = tk.Label(root, text="", bg='green', fg='white', font=('Arial', 14))
     score_label = tk.Label(root, text="", bg='green', fg='white', font=('Arial', 12))
+    money_label = tk.Label(root, text="", bg='green', fg='white', font=('Arial', 12))
     message_label = tk.Label(root, text="", bg='green', fg='yellow', font=('Arial', 14, 'bold'))
     
     # Buttons
@@ -45,6 +48,7 @@ def create_window():
     player_label.pack(pady=20)
     gallery_frame2.pack(pady=20)
     score_label.pack()
+    money_label.pack()
     message_label.pack(pady=20)
     button_frame.pack(pady=20)
     hit_button.pack(side='left', padx=5)
@@ -52,6 +56,7 @@ def create_window():
     new_button.pack(side='left', padx=5)
     
     return hit_button, stand_button, new_button
+
 
 def hand_to_string(hand):
     result_string = ""
@@ -80,6 +85,9 @@ def show_game(dealer_hand, player_hand):
 
 def show_score(score):
     score_label.config(text=f"Your score: {score}")
+
+def show_money(money):
+    money_label.config(text=f"Your money: ${money}")
 
 def show_message(text):
     message_label.config(text=text)

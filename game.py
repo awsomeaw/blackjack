@@ -10,7 +10,6 @@ values = {
 player_money = 500
 is_double_bet_called = False
 
-
 def create_deck():
     deck = []
     for suit in suits:

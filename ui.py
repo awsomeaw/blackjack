@@ -27,23 +27,35 @@ def create_window():
     root.configure(bg='green')
     root.iconbitmap("cards/ace_of_hearts.ico") # Set app icon
 
+    button_config = { 
+        'highlightbackground':'green',
+        'width':10,
+        'font':('Arial', 12)
+    }
+
+    label_config = {
+        'text':"",
+        'bg':'green',
+        'fg':'white'
+    }
+
     # Frames
     gallery_frame1 = tk.Frame(root, bg='green')
     gallery_frame2 = tk.Frame(root, bg='green')
     button_frame = tk.Frame(root, bg='green')
 
     # Labels
-    dealer_label = tk.Label(root, text="", bg='green', fg='white', font=('Arial', 14))
-    player_label = tk.Label(root, text="", bg='green', fg='white', font=('Arial', 14))
-    score_label = tk.Label(root, text="", bg='green', fg='white', font=('Arial', 12))
-    money_label = tk.Label(root, text="", bg='green', fg='white', font=('Arial', 12))
-    message_label = tk.Label(root, text="", bg='green', fg='yellow', font=('Arial', 14, 'bold'))
+    dealer_label = tk.Label(root, font=('Arial', 14), **label_config)
+    player_label = tk.Label(root, font=('Arial', 14), **label_config)
+    score_label = tk.Label(root, font=('Arial', 12), **label_config)
+    money_label = tk.Label(root, font=('Arial', 12), **label_config)
+    message_label = tk.Label(root, font=('Arial', 14, 'bold'), **label_config)
     
     # Buttons
-    hit_button = tk.Button(button_frame, text="Hit", width=10, font=('Arial', 12))
-    stand_button = tk.Button(button_frame, text="Stand", width=10, font=('Arial', 12))
-    new_button = tk.Button(button_frame, text="New game", width=10, font=('Arial', 12))
-    bet_button = tk.Button(button_frame, text="Double bet", width=10, font=('Arial', 12))
+    hit_button = tk.Button(button_frame, text="Hit", **button_config)
+    stand_button = tk.Button(button_frame, text="Stand", **button_config)
+    new_button = tk.Button(button_frame, text="New game", **button_config)
+    bet_button = tk.Button(button_frame, text="Double bet", **button_config)
 
     # Packing
     dealer_label.pack(pady=20)
@@ -70,22 +82,31 @@ def hand_to_string(hand):
 
     return result_string.rstrip(", ")
 
-def update_gallery(gallery,hand):  
+def update_gallery(gallery,hand,hidden):  
     for label in gallery.winfo_children():
         label.destroy()
 
     for card in hand:
         card_image = tk.Label(gallery, image=images["_of_".join(card).lower()+".png"], bg='green')
+
+        if hidden and hidden == True:
+            card_image = tk.Label(gallery, image=images["card_back.png"], bg='green')
+
         card_image.pack(side='left', padx=5)
 
-def show_game(dealer_hand, player_hand):
+def show_game(dealer_hand, player_hand, hidden=False):
     # Show dealer cards
-    dealer_label.config(text=f"Dealer: {hand_to_string(dealer_hand)}")
-    update_gallery(gallery_frame1,dealer_hand)
+
+    if hidden:
+        dealer_label.config(text="Dealer: ???")
+    else:
+        dealer_label.config(text=f"Dealer: {hand_to_string(dealer_hand)}")
+
+    update_gallery(gallery_frame1,dealer_hand,hidden)
 
     # Show player cards
     player_label.config(text=f"You: {hand_to_string(player_hand)}")
-    update_gallery(gallery_frame2,player_hand)
+    update_gallery(gallery_frame2,player_hand,hidden=False)
 
 def show_score(score):
     score_label.config(text=f"Your score: {score}")
